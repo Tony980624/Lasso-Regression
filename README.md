@@ -107,3 +107,22 @@ cor(auto$weight, auto$displacement)
 ```
 分别是0.86和0.93， 重量和排量高度相关，多半造成多重共线性，multicolinearty,
 
+```
+# 检验多重共线性, 膨胀银子VIF
+library(car)
+model = lm(horsepower ~ displacement + weight, data = auto)
+vif(model)
+```
+
+vif的值为7，大于5，说明两者确实高度相关
+
+$VIF_j = frac{1}{1-R_j}$
+
+$R^2公式:1-\frac{残差平方和(SSE)}{总平方和(SST}, SST表示y的实际值和均值的差的平方之和，代表了Y的总变异$
+
+这里的 $R_j$ 是 $X_j~其余自变量X$ 作为Regrion得出, 也就是说想知道Xj的膨胀因子，就把它作为因变量，其余X作为自变量来拟合一个Regression
+
+# 逻辑回归原理
+
+$P_{label=1} = \frac{1}{1+e^{-(\beta_0+\beta_1x)}}$ , 可见逻辑回归本质还是线性方程，它额输出值永远除以(0,1)区间，吻合了概率的特性，并且当线性方程的输出变大，函数就越接近1.
+
