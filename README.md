@@ -72,3 +72,17 @@ $\beta_1 = \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-bar{y})}{\sum_{i=1}^n(x_i-bar{x})
 几何方法的核心思想是，在线性回归中，模型的预测值 $X^T\epsilon  = 0$, 即误差于自变量平面正交，无关联
 
 $X^T\epsilon = 0$ $\implies$ $X^T(Y-X\hat{\beta}) = 0$ $\implies$ $X^TX\hat{\beta} = X^TY$ $\implies$  $\hat{\beta} = (X^TX)^{-1}X^TY$
+
+```
+# 计算截距和斜率
+Y = auto$horsepower
+X = auto$displacement
+beta1 = solve(X^T%*%X)%*%X^T%*%Y
+beta0 = mean(Y) - beta1*mean(X)
+abline(beta0, beta1, col = "red", lwd = 2)
+```
+
+计算总误差平方和， 为255697
+```
+residuals_1 = sum((Y - X %*% beta1)^2)
+```
