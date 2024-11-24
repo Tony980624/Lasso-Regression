@@ -77,12 +77,33 @@ $X^T\epsilon = 0$ $\implies$ $X^T(Y-X\hat{\beta}) = 0$ $\implies$ $X^TX\hat{\bet
 # 计算截距和斜率
 Y = auto$horsepower
 X = auto$displacement
-beta1 = solve(X^T%*%X)%*%X^T%*%Y
+beta1 = solve(t(X)%*%X)%*%t(X)%*%Y
 beta0 = mean(Y) - beta1*mean(X)
 abline(beta0, beta1, col = "red", lwd = 2)
 ```
 
+![a](https://github.com/Tony980624/Regression-Lasso-Regression-Logistic-regression/blob/main/images/Rplot1.png)
+
 计算总误差平方和， 为255697
+
 ```
 residuals_1 = sum((Y - X %*% beta1)^2)
 ```
+
+加入控制变量'weight'，总误差平方和瞬间将为118685
+```
+X = as.matrix(auto[, c(3, 5)]) 
+colnames(X) = NULL
+beta1 = solve(t(X)%*%X)%*%t(X)%*%Y
+beta0 = mean(Y) - beta1*mean(X)
+residuals_2 = sum((Y - X %*% beta1)^2)
+```
+
+## 控制变量 weight 可能导致模型问题，需要检验
+
+```
+cor(auto$weight, auto$horsepower)
+cor(auto$weight, auto$displacement)
+```
+分别是0.86和0.93， 重量和排量高度相关，多半造成多重共线性，multicolinearty,
+
